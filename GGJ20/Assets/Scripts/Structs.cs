@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public struct Weatherdata
 {
 	public Lonlat coord;
-	public Weather weather;
+	public Weather[] weather;
 	public Data main;
 	public Wind wind;
 	public Cloud clouds;
@@ -26,8 +27,8 @@ public struct Weatherdata
 		public string description;
 		public string icon;
 	}
-	public Weather[] weathers;
 
+	[JsonProperty(PropertyName = "base")]
 	public string _base;
 
 	public struct Data
@@ -55,7 +56,9 @@ public struct Weatherdata
 
 	public struct Water
 	{
+		[JsonProperty(PropertyName = "1h")]
 		public double _1h;
+		[JsonProperty(PropertyName = "3h")]
 		public double _3h;
 	}
 

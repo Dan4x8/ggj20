@@ -5,7 +5,7 @@ using System.Xml;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
 
-public class WWWTrial : MonoBehaviour
+public class JsonStuff : MonoBehaviour
 {
 	// Start is called before the first frame update
 	void Start()
@@ -13,16 +13,19 @@ public class WWWTrial : MonoBehaviour
 		StartCoroutine(DelayedStart());
 	}
 
-	
+
 	IEnumerator DelayedStart()
 	{
-		string url = "http://api.openweathermap.org/data/2.5/weather?lat=0&lon=12&appid=634a27863c00b54741b8171aff512e22";
+		string url = "http://api.openweathermap.org/data/2.5/weather?q=charlotte&appid=634a27863c00b54741b8171aff512e22";
 		UnityWebRequest www = UnityWebRequest.Get(url);
 		yield return www.SendWebRequest();
 		if (www.error == null)
 
 		{
 			var data = (www.downloadHandler.text);
+			Debug.Log(data);
+			var d2 = JsonConvert.DeserializeObject<Weatherdata>(data);
+			Debug.Log(d2.rain._1h);
 			/*
 			double cloud = data.clouds.all;
 
@@ -32,5 +35,5 @@ public class WWWTrial : MonoBehaviour
 			Debug.Log(data.clouds.all);
 			*/
 		}
-    }
+	}
 }
