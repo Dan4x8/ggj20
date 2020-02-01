@@ -9,11 +9,11 @@ public class TreeController : MonoBehaviour
 
     [SerializeField]
     private float growth = 0;
-    public float Growth { get; }
+    public float Growth { get { return growth; } }
 
     [SerializeField]
     private float water = 15;
-    public float Water { get; }
+    public float Water { get { return water; } }
 
     [SerializeField]
     private float waterLow = 10;
@@ -23,6 +23,9 @@ public class TreeController : MonoBehaviour
     private float waterHigh = 20;
     [SerializeField]
     private float waterHighDeath = 25;
+    [SerializeField]
+    private float waterBaseConsumption = 0.5f;
+    private float waterGrowthConsumption = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +36,7 @@ public class TreeController : MonoBehaviour
     void Update()
     {
         GRATE = GrowthRate();
-        Grow(growth * Time.deltaTime);
+        Grow(growth * GrowthRate() * Time.deltaTime, waterBaseConsumption * Time.deltaTime);
 
     }
 
@@ -46,8 +49,17 @@ public class TreeController : MonoBehaviour
         return 1f - Mathf.Abs(water - avg) / (avg - waterLow);
     }
 
-    void Grow(float rate)
+    void Grow(float rate, float baseConsumption)
     {
+        water -= baseConsumption;
+        if (rate <= 0)
+            return;
         tree.transform.position = new Vector3(tree.position.x, tree.position.y + rate, tree.position.z);
+        water -= rate * waterGrowthConsumption;
+    }
+
+    public void AddWater(float amount)
+    {
+        water += amount;
     }
 }

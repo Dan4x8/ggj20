@@ -8,6 +8,7 @@ public class Bmanager : MonoBehaviour
     void Awake()
     {
 
-        tmpText.text = Weather.Current.Data.name + "; " + " " + Weather.Current.Data.sys.country;
+        tmpText.text = Weather.Current.Data.name + "; " + " " + Weather.Current.Data.sys.country + "\r\n"
+            + "rain (mm/h): " + Weather.Current.Data.rain._1h;
     }
 }

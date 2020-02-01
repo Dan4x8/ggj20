@@ -32,7 +32,6 @@ public class Weather : MonoBehaviour
 		UnityWebRequest www = UnityWebRequest.Get(url);
 		yield return www.SendWebRequest();
 		if (www.error == null)
-
 		{
 			var data = (www.downloadHandler.text);
 			var d2 = JsonConvert.DeserializeObject<Weatherdata>(data);
