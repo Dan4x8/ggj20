@@ -23,9 +23,7 @@ public class JsonStuff : MonoBehaviour
 
 		{
 			var data = (www.downloadHandler.text);
-			Debug.Log(data);
 			var d2 = JsonConvert.DeserializeObject<Weatherdata>(data);
-			Debug.Log(d2.rain._1h);
 			/*
 			double cloud = data.clouds.all;
 
@@ -36,7 +34,7 @@ public class JsonStuff : MonoBehaviour
 			*/
 		}
 	}
-
+	/*
 	private void Update()
 	{
 		Debug.Log(Input.mousePosition);
@@ -65,10 +63,7 @@ public class JsonStuff : MonoBehaviour
 			pox *= 2f - Mathf.Abs(lat) / 90f;
 		else if (pox < avg_w)
 			pox -= (Mathf.Abs(lat) / 90f) * (avg_w - pox);
-		*/
-
-		//DAN
-		/*var lon = pox * 360f / w - 180f;
+		
 		lon = (1f - Mathf.Abs(lat / 90f)) * lon;
 		*/
 
