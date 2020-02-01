@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 
 public class WWWTrial : MonoBehaviour
 {
+	public float lat = 0;
+	public float lon = 0;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -16,21 +18,18 @@ public class WWWTrial : MonoBehaviour
 	
 	IEnumerator DelayedStart()
 	{
-		string url = "http://api.openweathermap.org/data/2.5/weather?lat=0&lon=12&appid=634a27863c00b54741b8171aff512e22";
+		string url = "http://api.openweathermap.org/data/2.5/weather?lat=" +lat.ToString() +"&lon=" +lon.ToString() +"&appid=634a27863c00b54741b8171aff512e22";
 		UnityWebRequest www = UnityWebRequest.Get(url);
 		yield return www.SendWebRequest();
 		if (www.error == null)
 
 		{
 			var data = (www.downloadHandler.text);
-			/*
-			double cloud = data.clouds.all;
-
-			string latitude = data["coord.lat"].Value<string>();
-			double rain = data.rain._3h;
-			string sun = data.weather.description;
-			Debug.Log(data.clouds.all);
-			*/
+			Debug.Log(data);
 		}
     }
+	public void UpdateLocation()
+	{
+		StartCoroutine(DelayedStart());
+	}
 }

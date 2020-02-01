@@ -41,14 +41,19 @@ public class JsonStuff : MonoBehaviour
 	{
 		Debug.Log(Input.mousePosition);
 
-		var pox = Input.mousePosition.x;
-		var poy = Input.mousePosition.y;
 		var w = 1024f;
 		var h = 508f;
 
 
 		float avg_w = w / 2f;
 		float avg_h = h / 2f;
+
+
+		var pox = Input.mousePosition.x;
+		var poy = Input.mousePosition.y;
+
+		pox -= avg_w;
+		poy -= avg_h;
 
 		var lat = poy * 180f / h - 90f;
 		//lat *= (Mathf.Abs(lat) / 90f);
@@ -62,8 +67,18 @@ public class JsonStuff : MonoBehaviour
 			pox -= (Mathf.Abs(lat) / 90f) * (avg_w - pox);
 		*/
 
-		var lon = pox * 360f / w - 180f;
+		//DAN
+		/*var lon = pox * 360f / w - 180f;
 		lon = (1f - Mathf.Abs(lat / 90f)) * lon;
-		Debug.Log("Lat:" + lat + "; Lon:" + lon);
+		*/
+
+		//Luca
+		var lon = pox * 360f / w - 180f;
+		lon = Mathf.Sqrt((pox * pox * ((h * h) / 4)) / (((h * h) / 4) - poy * poy));
+		lon = lon * 360f / w;
+		if (pox < 0)
+			pox *= -1f;
+		lat = lat + 90;
+		Debug.Log(lon +";" +lat);
 	}
 }
