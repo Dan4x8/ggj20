@@ -36,4 +36,34 @@ public class JsonStuff : MonoBehaviour
 			*/
 		}
 	}
+
+	private void Update()
+	{
+		Debug.Log(Input.mousePosition);
+
+		var pox = Input.mousePosition.x;
+		var poy = Input.mousePosition.y;
+		var w = 1024f;
+		var h = 508f;
+
+
+		float avg_w = w / 2f;
+		float avg_h = h / 2f;
+
+		var lat = poy * 180f / h - 90f;
+		//lat *= (Mathf.Abs(lat) / 90f);
+
+		var t = (pox - avg_w) / avg_w;
+
+		/*
+		if (pox > avg_w)
+			pox *= 2f - Mathf.Abs(lat) / 90f;
+		else if (pox < avg_w)
+			pox -= (Mathf.Abs(lat) / 90f) * (avg_w - pox);
+		*/
+
+		var lon = pox * 360f / w - 180f;
+		lon = (1f - Mathf.Abs(lat / 90f)) * lon;
+		Debug.Log("Lat:" + lat + "; Lon:" + lon);
+	}
 }
