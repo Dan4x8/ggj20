@@ -56,15 +56,12 @@ public class TreeController : MonoBehaviour
 
     void Grow(float rate, float baseConsumption)
     {
-        GrowTrunk(rate);
-        return;
         water -= baseConsumption;
         if (rate <= 0)
             return;
-        tree.transform.position = new Vector3(tree.position.x, tree.position.y + rate, tree.position.z);
+        GrowTrunk(rate);
         water -= rate * waterGrowthConsumption;
     }
-
     public void AddWater(float amount)
     {
         water += amount;
@@ -96,9 +93,8 @@ public class TreeController : MonoBehaviour
 
         this.vCols = segments + 1;
         vRows = segment_height + 1;
-        var vCols = segments + 1;  //+1 for welding
+        var vCols = segments + 1;
 
-        //calculate sizes
         int nVerts = vCols * vRows;
         int numUVs = nVerts;
         int numSideTris = segments * segment_height * 2;
@@ -175,12 +171,10 @@ public class TreeController : MonoBehaviour
             }
             leftSided = !leftSided;
 
-            //assign bottom tris
             tris[bottomCapBaseIndex + 0] = rightIndex;
             tris[bottomCapBaseIndex + 1] = middleIndex;
             tris[bottomCapBaseIndex + 2] = leftIndex;
 
-            //assign top tris
             tris[topCapBaseIndex + 0] = topCapVertexOffset + leftIndex;
             tris[topCapBaseIndex + 1] = topCapVertexOffset + middleIndex;
             tris[topCapBaseIndex + 2] = topCapVertexOffset + rightIndex;
@@ -194,81 +188,79 @@ public class TreeController : MonoBehaviour
         trunk.RecalculateBounds();
         trunk.RecalculateTangents();
     }
-    bool done = false;
+
+    Vector2 segDir = new Vector2(0f,0f);
     public void GrowTrunk(float rate)
     {
-        if (trunk == null ||done)
+        if (trunk == null)
             return;
 
         if(segTimer<= 0)
         {
-            //segTimer = 5f;
-            done = true;
+            segTimer = Random.Range(0.2f, 0.5f);
             AddSegment();
             return;
         }
         var v = trunk.vertices;
         for(int i = v.Length-1; i >= v.Length - segments - 1;i--)
         {
-            v[i] = new Vector3(v[i].x, v[i].y + rate, v[i].z);
+            v[i] = new Vector3(v[i].x + segDir.x, v[i].y + rate, v[i].z + segDir.y);
         }
         trunk.SetVertices(v);
         trunk.RecalculateBounds();
+        trunk.RecalculateNormals();
         segTimer -= rate;
     }
 
-    private float segTimer = 1f;
+    private float segTimer = .4f;
+    private int segs = 1;
 
     public void AddSegment()
     {
+        segDir = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        segDir *= 0.0005f;
+        vRows++;
         var v = trunk.vertices;
-        //        var uv = trunk.uv;
         var tri = trunk.triangles;
 
         List<Vector3> vs = new List<Vector3>(v);
-        for (int i = v.Length - 1; i >= v.Length - segments - 1; i--)
+        
+        for(int i = v.Length - segments -1; i < v.Length;i++)
         {
-            vs.Add(new Vector3(v[i].x, v[i].y + .01f, v[i].z));
+            vs.Add(new Vector3(v[i].x, v[i].y+.000001f, v[i].z));
         };
 
-        List<int> tris = new List<int>(tri);
-        for(int i = 0; i < vCols;i++)
-        {
-            tris.Add(0);
-        }
-        for(int j = 1; j<=1;j++)
+        int numSideTris = segments * ++segment_height * 2;
+        int numCapTris = segments - 2;
+        int trisArrayLength = (numSideTris + numCapTris * 2) * 3;
+
+        int[] tris = new int[trisArrayLength];
+
+        for (int j = 0; j < vRows; j++)
         {
             for (int i = 0; i < vCols; i++)
             {
-                int k = j + v.Length / 18;
-
-                if (k == v.Length/18 || i >= vCols - 1)
+                if (j == 0 || i >= vCols - 1)
                 {
                     continue;
                 }
                 else
                 {
-                    int baseIndex = (k - 1) * segments * 6 + i * 6;
+                    int baseIndex = numCapTris * 3 + (j - 1) * segments * 6 + i * 6;Debug.Log(baseIndex + 5 + " of " + tris.Length);
 
+                    tris[baseIndex + 0] = j * vCols + i;
+                    tris[baseIndex + 1] = j * vCols + i + 1;
+                    tris[baseIndex + 2] = (j - 1) * vCols + i;
 
-                    Debug.Log(baseIndex + 5 + " of " + tris.Count);
-
-                    tris[baseIndex + 0] = k * vCols + i;
-                    tris[baseIndex + 1] = k * vCols + i + 1;
-                    tris[baseIndex + 2] = (k - 1) * vCols + i;
-
-                    tris[baseIndex + 3] = (k - 1) * vCols + i;
-                    tris[baseIndex + 4] = k * vCols + i + 1;
-                    tris[baseIndex + 5] = (k - 1) * vCols + i + 1;
+                    tris[baseIndex + 3] = (j - 1) * vCols + i;
+                    tris[baseIndex + 4] = j * vCols + i + 1;
+                    tris[baseIndex + 5] = (j - 1) * vCols + i + 1;
                 }
             }
         }
 
-
-
-
         trunk.SetVertices(vs);
-        trunk.SetTriangles(tri,0);
+        trunk.SetTriangles(tris,0);
         trunk.RecalculateNormals();
         trunk.RecalculateBounds();
         trunk.RecalculateTangents();
