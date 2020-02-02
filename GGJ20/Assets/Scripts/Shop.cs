@@ -6,11 +6,28 @@ using UnityEngine.UI;
 public class Shop : MonoBehaviour
 {
 	float time = 1f;
+
 	int waterTic = 0;
 	public int waterCost = 5;
 	public Button waterButton;
-    // Start is called before the first frame update
-    public void AddWater()
+
+	int waterHighTic = 0;
+	public int waterHighCost = 30;
+	public Button waterHighBut;
+
+	int waterLowTic = 0;
+	public int waterLowCost = 10;
+	public Button waterLowBut;
+
+	int tempLowTic = 0;
+	public int tempLowCost = 10;
+	public Button tempLowBut;
+
+	int tempHighTic = 0;
+	public int tempHighCost = 10;
+	public Button tempHighBut;
+	// Start is called before the first frame update
+	public void AddWater()
     {
         if(waterTic>=waterCost)
 		{
@@ -18,8 +35,40 @@ public class Shop : MonoBehaviour
 		}
     }
 
-    // Update is called once per frame
-    void Update()
+	public void WaterResHigh()
+	{
+		if(waterHighTic>=waterHighCost)
+		{
+			waterHighTic = 0;
+		}
+	}
+	
+	public void WaterResLow()
+	{
+		if(waterHighTic>=waterHighCost)
+		{
+			waterLowTic = 0;
+		}
+	}
+
+	public void TempResLow()
+	{
+		if (tempLowTic >= tempLowCost)
+		{
+			tempLowTic = 0;
+		}
+	}
+
+	public void TempResHigh()
+	{
+		if (tempHighTic >= tempHighCost)
+		{
+			tempHighTic = 0;
+		}
+	}
+
+	// Update is called once per frame
+	void Update()
     {
 		time -= Time.deltaTime;
 		if(time<0)
@@ -35,13 +84,44 @@ public class Shop : MonoBehaviour
 		{
 			waterButton.enabled = true;
 		}
-    }
 
-	public enum Ressource
-	{
-		WaterCan,
+
+		if(waterHighTic<waterHighCost)
+		{
+			waterHighBut.enabled = false;
+		}
+		else
+		{
+			waterHighBut.enabled = true;
+		}
+
+		if (waterLowTic < waterLowCost)
+		{
+			waterLowBut.enabled = false;
+		}
+		else
+		{
+			waterLowBut.enabled = true;
+		}
+
+		if (tempLowTic < tempLowCost)
+		{
+			tempLowBut.enabled = false;
+		}
+		else
+		{
+			tempLowBut.enabled = true;
+		}
+
+		if (tempHighTic < tempHighCost)
+		{
+			tempHighBut.enabled = false;
+		}
+		else
+		{
+			tempHighBut.enabled = true;
+		}
 	}
-
 
 	public void Cost(string ressource)
 	{
@@ -49,6 +129,18 @@ public class Shop : MonoBehaviour
 		{
 			case "WaterCan":
 				waterTic = 0;
+				break;
+			case "WaterResHigh":
+				waterHighTic = 0;
+				break;
+			case "WaterResLow":
+				waterLowTic = 0;
+				break;
+			case "TempResLow":
+				tempLowTic = 0;
+				break;
+			case "TempResHigh":
+				tempHighTic = 0;
 				break;
 		}
 	}
