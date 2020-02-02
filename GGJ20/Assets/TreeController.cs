@@ -54,31 +54,63 @@ public class TreeController : MonoBehaviour
     }
 
     public void LowerWaterResistanceHigh(float value)
-    { }
+    {
+        HeightenWaterResistanceHigh(value * -1);
+    }
 
     public void HeightenWaterResistanceLow(float value)
     {
         waterLow -= value;
         waterLowDead -= value * 1.1f;
-        waterBaseConsumption -= value * 0.1f;
+        waterBaseConsumption -= value * 0.095f;
         waterHigh -= value * 0.11f;
         waterHighDeath -= value * 0.01f;
     }
 
     public void LowerWaterResistanceLow(float value)
-    { }
+    {
+        HeightenWaterResistanceLow(value * -1f);
+    }
 
     public void HeightenTempHighResistance(float value)
-    { }
+    {
+        tempHigh += value;
+        tempHighDead += value * 1.1f;
+        waterBaseConsumption += value * 0.1f;
+        tempLow += value * 0.11f;
+        tempLowDead += value * 0.01f;
+    }
+
+    public void HeightenGrowthPower(float value)
+    {
+        growth += value;
+        waterBaseConsumption += value * 0.5f;
+    }
+
+    public void LowerGrowthPower(float value)
+    {
+        growth -= value;
+        waterBaseConsumption -= value * 0.4f;
+    }
 
     public void LowerTempHighResistance(float value)
-    { }
+    {
+        HeightenTempHighResistance(value * -1f);  
+    }
 
     public void HeightenTempLowResistance(float value)
-    { }
+    {
+        tempLow -= value;
+        tempLowDead -= value * 1.1f;
+        waterBaseConsumption -= value * 0.095f;
+        tempHigh -= value * 0.11f;
+        tempHighDead -= value * 0.01f;
+    }
 
     public void LowerTempLowResistance(float value)
-    { }
+    {
+        HeightenTempLowResistance(value * -1f);
+    }
 
     public Material mat;
 
