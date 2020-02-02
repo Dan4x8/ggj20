@@ -33,7 +33,7 @@ public class TreeController : MonoBehaviour
     public float tempHigh = 40;
     public float tempHighDead = 50;
     public float tempLow = 15;
-    public float tempLowDead = -10;
+    public float tempLowDead = -100;
     public float tempWaterUsagePerDeg = .01f;
     public float temp;
 
@@ -72,6 +72,8 @@ public class TreeController : MonoBehaviour
 
     void Die(CauseDeath cd)
     {
+        if (dataProvider == null)
+            return;
         dataProvider.GetComponent<DataProvider>().cause = cd;
         UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
     }
@@ -96,7 +98,7 @@ public class TreeController : MonoBehaviour
 
     public void SetTemp(float kelvin)
     {
-        temp = kelvin - 273.5f;
+        temp = kelvin - 273.15f;
     }
     public void AddWater(float amount)
     {
