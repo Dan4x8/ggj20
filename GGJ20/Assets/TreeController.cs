@@ -28,6 +28,11 @@ public class TreeController : MonoBehaviour
     private float waterBaseConsumption = 0.5f;
     private float waterGrowthConsumption = 0.5f;
 
+    public float tempHigh = 40;
+    public float tempHighDead = 50;
+    public float tempLow = 15;
+    public float tempLowDead = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +46,10 @@ public class TreeController : MonoBehaviour
     void Update()
     {
         GRATE = GrowthRate();
+
+        if (water <= waterLowDead || water >= waterHighDeath)
+            UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
+
         Grow(growth * GrowthRate() * Time.deltaTime, waterBaseConsumption * Time.deltaTime);
 
     }
