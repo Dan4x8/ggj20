@@ -242,7 +242,7 @@ public class TreeController : MonoBehaviour
             {
                 int k = j + v.Length / 18;
 
-                if (k == v.Length/18 || i >= vCols - 1 - 3)
+                if (k == v.Length/18 || i >= vCols - 1)
                 {
                     continue;
                 }
