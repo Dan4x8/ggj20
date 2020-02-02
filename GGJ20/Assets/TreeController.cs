@@ -31,7 +31,9 @@ public class TreeController : MonoBehaviour
     public float tempHigh = 40;
     public float tempHighDead = 50;
     public float tempLow = 15;
-    public float tempLowDead = 0;
+    public float tempLowDead = -10;
+    public float tempWaterUsagePerDeg = .01f;
+    public float temp;
 
     // Start is called before the first frame update
     void Start()
@@ -47,11 +49,13 @@ public class TreeController : MonoBehaviour
     {
         GRATE = GrowthRate();
 
-        if (water <= waterLowDead || water >= waterHighDeath)
+        if (water <= waterLowDead || water >= waterHighDeath
+            || temp < tempLowDead || temp >= tempHighDead)
             UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
 
         Grow(growth * GrowthRate() * Time.deltaTime, waterBaseConsumption * Time.deltaTime);
-
+        if(temp >= 0)
+            water -= tempWaterUsagePerDeg * Time.deltaTime * temp;
     }
 
     [SerializeField]
@@ -70,6 +74,11 @@ public class TreeController : MonoBehaviour
             return;
         GrowTrunk(rate);
         water -= rate * waterGrowthConsumption;
+    }
+
+    public void SetTemp(float kelvin)
+    {
+        temp = kelvin - 273.5f;
     }
     public void AddWater(float amount)
     {
