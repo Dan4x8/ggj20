@@ -13,6 +13,7 @@ public class KeepAlive : MonoBehaviour
             DestroyImmediate(gameObject);
             return;
         }
+		DontDestroyOnLoad(gameObject);
         Instance = this;
     }
 }

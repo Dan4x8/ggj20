@@ -36,7 +36,7 @@ public class JsonStuff : MonoBehaviour
 	}
 	private void Update()
 	{
-		Debug.Log(Input.mousePosition);
+		//Debug.Log(Input.mousePosition);
 
 		var w = 1024f;
 		var h = 508f;
@@ -73,6 +73,6 @@ public class JsonStuff : MonoBehaviour
 		if (pox < 0)
 			pox *= -1f;
 		lat = lat + 90;
-		Debug.Log(lon +";" +lat);
+		//Debug.Log(lon +";" +lat);
 	}
 }
