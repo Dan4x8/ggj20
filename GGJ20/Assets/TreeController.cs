@@ -5,6 +5,8 @@ using System.Linq;
 
 public class TreeController : MonoBehaviour
 {
+    public DataProvider dataProvider;
+
     [SerializeField]
     private Transform tree;
 
@@ -31,7 +33,7 @@ public class TreeController : MonoBehaviour
     public float tempHigh = 40;
     public float tempHighDead = 50;
     public float tempLow = 15;
-    public float tempLowDead = -10;
+    public float tempLowDead = -100;
     public float tempWaterUsagePerDeg = .01f;
     public float temp;
 
@@ -42,6 +44,74 @@ public class TreeController : MonoBehaviour
         AssignMaterial(mat);
     }
 
+    public void HeightenWaterResistanceHigh(float value)
+    {
+        waterHigh += value;
+        waterHighDeath += value * 1.1f;
+        waterBaseConsumption += value * 0.1f;
+        waterLow += value * 0.11f;
+        waterLowDead += value * 0.01f;
+    }
+
+    public void LowerWaterResistanceHigh(float value)
+    {
+        HeightenWaterResistanceHigh(value * -1);
+    }
+
+    public void HeightenWaterResistanceLow(float value)
+    {
+        waterLow -= value;
+        waterLowDead -= value * 1.1f;
+        waterBaseConsumption -= value * 0.095f;
+        waterHigh -= value * 0.11f;
+        waterHighDeath -= value * 0.01f;
+    }
+
+    public void LowerWaterResistanceLow(float value)
+    {
+        HeightenWaterResistanceLow(value * -1f);
+    }
+
+    public void HeightenTempHighResistance(float value)
+    {
+        tempHigh += value;
+        tempHighDead += value * 1.1f;
+        waterBaseConsumption += value * 0.1f;
+        tempLow += value * 0.11f;
+        tempLowDead += value * 0.01f;
+    }
+
+    public void HeightenGrowthPower(float value)
+    {
+        growth += value;
+        waterBaseConsumption += value * 0.5f;
+    }
+
+    public void LowerGrowthPower(float value)
+    {
+        growth -= value;
+        waterBaseConsumption -= value * 0.4f;
+    }
+
+    public void LowerTempHighResistance(float value)
+    {
+        HeightenTempHighResistance(value * -1f);  
+    }
+
+    public void HeightenTempLowResistance(float value)
+    {
+        tempLow -= value;
+        tempLowDead -= value * 1.1f;
+        waterBaseConsumption -= value * 0.095f;
+        tempHigh -= value * 0.11f;
+        tempHighDead -= value * 0.01f;
+    }
+
+    public void LowerTempLowResistance(float value)
+    {
+        HeightenTempLowResistance(value * -1f);
+    }
+
     public Material mat;
 
     // Update is called once per frame
@@ -49,13 +119,31 @@ public class TreeController : MonoBehaviour
     {
         GRATE = GrowthRate();
 
-        if (water <= waterLowDead || water >= waterHighDeath
-            || temp < tempLowDead || temp >= tempHighDead)
-            UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
+        CauseDeath cd = CauseDeath.None;
+
+        if (water <= waterLowDead)
+            cd = CauseDeath.WaterLow;
+        else if (water >= waterHighDeath)
+            cd = CauseDeath.Waterhigh;
+        else if (temp >= tempHighDead)
+            cd = CauseDeath.TempHigh;
+        else if (temp <= tempLowDead)
+            cd = CauseDeath.TempLow;
+
+        if (cd != CauseDeath.None)
+            Die(cd);
 
         Grow(growth * GrowthRate() * Time.deltaTime, waterBaseConsumption * Time.deltaTime);
         if(temp >= 0)
             water -= tempWaterUsagePerDeg * Time.deltaTime * temp;
+    }
+
+    void Die(CauseDeath cd)
+    {
+        if (dataProvider == null)
+            return;
+        dataProvider.GetComponent<DataProvider>().cause = cd;
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
     }
 
     [SerializeField]
@@ -78,7 +166,7 @@ public class TreeController : MonoBehaviour
 
     public void SetTemp(float kelvin)
     {
-        temp = kelvin - 273.5f;
+        temp = kelvin - 273.15f;
     }
     public void AddWater(float amount)
     {
