@@ -51,6 +51,6 @@ public class WorldmapController : MonoBehaviour
 	}
 	private void LoadLevel(Weatherdata weather)
 	{
-		SceneManager.LoadScene("Sandbox - DAN");
+		SceneManager.LoadScene("FinalMainScene");
 	}
 }

@@ -12,9 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Map.unity
     guid: 5d2ded8d1d956a3488f746ca696b24b6
   - enabled: 1
-    path: Assets/Scenes/Sandbox - DAN.unity
-    guid: bf7ebe9c07b967641a4d68132ef1cc1a
-  - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: 78f754d1c1b296c46a08607ce094fa65
+  - enabled: 1
+    path: Assets/Scenes/FinalMainScene.unity
+    guid: 48df8ea5aa7e1724d8b65a335cbdc9c1
   m_configObjects: {}
