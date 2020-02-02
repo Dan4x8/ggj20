@@ -1351,9 +1351,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1134512853}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f13d2a74de5b97043b7ee1dae9985a82, type: 3}
+  m_Script: {fileID: 11500000, guid: f04b777928a296f47bb96029196fccb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cause: 0
 --- !u!114 &1134512855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2234,7 +2235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f475251b10eefab43bd9d5be93e03e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  treeController: {fileID: 0}
+  treeController: {fileID: 2100205982}
 --- !u!4 &1879636913
 Transform:
   m_ObjectHideFlags: 0
@@ -2430,6 +2431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c75c7689c7476e459323b3b0a63155e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dataProvider: {fileID: 1134512854}
   tree: {fileID: 866863256}
   growth: 0.1
   water: 15
