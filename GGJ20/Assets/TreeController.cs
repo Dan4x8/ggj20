@@ -5,7 +5,7 @@ using System.Linq;
 
 public class TreeController : MonoBehaviour
 {
-    public dynamic DataProvider;
+    public DataProvider dataProvider;
 
     [SerializeField]
     private Transform tree;
@@ -55,9 +55,13 @@ public class TreeController : MonoBehaviour
 
         if (water <= waterLowDead)
             cd = CauseDeath.WaterLow;
-        if (water <= waterLowDead || water >= waterHighDeath
-            || temp < tempLowDead || temp >= tempHighDead)
-            { }
+        else if (water >= waterHighDeath)
+            cd = CauseDeath.Waterhigh;
+        else if (temp >= tempHighDead)
+            cd = CauseDeath.TempHigh;
+        else if (temp <= tempLowDead)
+            cd = CauseDeath.TempLow;
+
         if (cd != CauseDeath.None)
             Die(cd);
 
@@ -68,6 +72,7 @@ public class TreeController : MonoBehaviour
 
     void Die(CauseDeath cd)
     {
+        dataProvider.GetComponent<DataProvider>().cause = cd;
         UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
     }
 
