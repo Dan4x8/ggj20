@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum CauseDeath
 {
-	NaN,
+	None,
 	WaterLow,
 	Waterhigh,
 	TempLow,

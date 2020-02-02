@@ -51,11 +51,13 @@ public class TreeController : MonoBehaviour
     {
         GRATE = GrowthRate();
 
-        CauseDeath cd;
+        CauseDeath cd = CauseDeath.None;
+
         if (water <= waterLowDead)
-            cd = 
+            cd = CauseDeath.WaterLow;
         if (water <= waterLowDead || water >= waterHighDeath
-            || temp < tempLowDead || temp >= tempHighDead);
+            || temp < tempLowDead || temp >= tempHighDead)
+            { }
         if (cd != CauseDeath.None)
             Die(cd);
 
