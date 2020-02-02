@@ -44,6 +44,42 @@ public class TreeController : MonoBehaviour
         AssignMaterial(mat);
     }
 
+    public void HeightenWaterResistanceHigh(float value)
+    {
+        waterHigh += value;
+        waterHighDeath += value * 1.1f;
+        waterBaseConsumption += value * 0.1f;
+        waterLow += value * 0.11f;
+        waterLowDead += value * 0.01f;
+    }
+
+    public void LowerWaterResistanceHigh(float value)
+    { }
+
+    public void HeightenWaterResistanceLow(float value)
+    {
+        waterLow -= value;
+        waterLowDead -= value * 1.1f;
+        waterBaseConsumption -= value * 0.1f;
+        waterHigh -= value * 0.11f;
+        waterHighDeath -= value * 0.01f;
+    }
+
+    public void LowerWaterResistanceLow(float value)
+    { }
+
+    public void HeightenTempHighResistance(float value)
+    { }
+
+    public void LowerTempHighResistance(float value)
+    { }
+
+    public void HeightenTempLowResistance(float value)
+    { }
+
+    public void LowerTempLowResistance(float value)
+    { }
+
     public Material mat;
 
     // Update is called once per frame
