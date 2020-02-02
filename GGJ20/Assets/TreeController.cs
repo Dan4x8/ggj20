@@ -246,7 +246,7 @@ public class TreeController : MonoBehaviour
                 }
                 else
                 {
-                    int baseIndex = numCapTris * 3 + (j - 1) * segments * 6 + i * 6;Debug.Log(baseIndex + 5 + " of " + tris.Length);
+                    int baseIndex = numCapTris * 3 + (j - 1) * segments * 6 + i * 6;
 
                     tris[baseIndex + 0] = j * vCols + i;
                     tris[baseIndex + 1] = j * vCols + i + 1;
