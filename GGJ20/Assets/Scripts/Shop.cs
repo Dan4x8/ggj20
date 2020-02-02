@@ -6,30 +6,36 @@ using UnityEngine.UI;
 public class Shop : MonoBehaviour
 {
 	float time = 1f;
+	int clock = 0;
+	public TMPro.TMP_Text text;
 
-	int waterTic = 0;
-	public int waterCost = 5;
+	int waterTic = 3;
+	public int waterCost = 3;
 	public Button waterButton;
 
-	int waterHighTic = 0;
-	public int waterHighCost = 30;
+	int waterHighTic = 15;
+	public int waterHighCost = 15;
 	public Button waterHighBut;
 
-	int waterLowTic = 0;
-	public int waterLowCost = 10;
+	int waterLowTic = 15;
+	public int waterLowCost = 15;
 	public Button waterLowBut;
 
-	int tempLowTic = 0;
-	public int tempLowCost = 10;
+	int tempLowTic = 15;
+	public int tempLowCost = 15;
 	public Button tempLowBut;
 
-	int tempHighTic = 0;
-	public int tempHighCost = 10;
+	int tempHighTic = 15;
+	public int tempHighCost = 15;
 	public Button tempHighBut;
 
-	int growPlusTic = 0;
-	public int growPlusCost = 10;
+	int growPlusTic = 20;
+	public int growPlusCost = 20;
 	public Button growPlusBut;
+
+	int growMinusTic = 20;
+	public int growMinusCost = 20;
+	public Button growMinusBut;
 	// Start is called before the first frame update
 	public void AddWater()
     {
@@ -71,11 +77,19 @@ public class Shop : MonoBehaviour
 		}
 	}
 	
-	public void GrowPLus()
+	public void GrowPlus()
 	{
 		if (growPlusTic >= growPlusCost)
 		{
 			growPlusTic = 0;
+		}
+	}
+
+	public void GrowMinus()
+	{
+		if (growMinusTic >= growMinusCost)
+		{
+			growMinusTic = 0;
 		}
 	}
 
@@ -87,6 +101,7 @@ public class Shop : MonoBehaviour
 		{
 			time = 1;
 			waterTic++;
+			clock++;
 		}
 		if(waterTic<waterCost)
 		{
@@ -133,6 +148,25 @@ public class Shop : MonoBehaviour
 		{
 			tempHighBut.enabled = true;
 		}
+
+		if (growPlusTic < growPlusCost)
+		{
+			growPlusBut.enabled = false;
+		}
+		else
+		{
+			growPlusBut.enabled = true;
+		}
+
+		if (growMinusTic < growMinusCost)
+		{
+			growMinusBut.enabled = false;
+		}
+		else
+		{
+			growMinusBut.enabled = true;
+		}
+		text.text = clock.ToString();
 	}
 
 	public void Cost(string ressource)
@@ -153,6 +187,12 @@ public class Shop : MonoBehaviour
 				break;
 			case "TempResHigh":
 				tempHighTic = 0;
+				break;
+			case "GrowPlus":
+				growPlusTic = 0;
+				break;
+			case "GrowMinus":
+				growMinusTic = 0;
 				break;
 		}
 	}
