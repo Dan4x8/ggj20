@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -46,7 +47,7 @@ public class WorldmapController : MonoBehaviour
 		if (pox < 0)
 			lon *= -1f;
 		lat = lat + 90*1.06f;
-		weather.RequestWeather(lon, lat, LoadLevel);
+		weather.RequestWeather(lon, lat, LoadLevel, text);
 	}
 	private void LoadLevel(Weatherdata weather)
 	{

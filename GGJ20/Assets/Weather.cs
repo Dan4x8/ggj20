@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class Weather : MonoBehaviour
 {
@@ -20,13 +21,13 @@ public class Weather : MonoBehaviour
 		weather = this;
 	}
 
-	public void RequestWeather(float lon, float lat, Action<Weatherdata> action)
+	public void RequestWeather(float lon, float lat, Action<Weatherdata> action, Text text)
 	{
-		StartCoroutine(WebRequestWeather(lon, lat,action));
+		StartCoroutine(WebRequestWeather(lon, lat,action, text));
 	}
 
 
-	IEnumerator WebRequestWeather(float lon, float lat, Action<Weatherdata> callback)
+	IEnumerator WebRequestWeather(float lon, float lat, Action<Weatherdata> callback, Text text)
 	{
 		string url = "http://api.openweathermap.org/data/2.5/weather?lon=" + lon + "&lat=" + lat + "&appid=634a27863c00b54741b8171aff512e22";
 		UnityWebRequest www = UnityWebRequest.Get(url);

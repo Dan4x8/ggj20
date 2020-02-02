@@ -2338,7 +2338,7 @@ MonoBehaviour:
   waterHigh: 20
   waterHighDeath: 25
   waterBaseConsumption: 0.3
-  mat: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  mat: {fileID: -6478536213147159724, guid: 3fcc15ffac937574ebb8db5eb047fd4d, type: 3}
   GRATE: 0
 --- !u!4 &2100205983
 Transform:
