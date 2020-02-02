@@ -26,6 +26,10 @@ public class Shop : MonoBehaviour
 	int tempHighTic = 0;
 	public int tempHighCost = 10;
 	public Button tempHighBut;
+
+	int growPlusTic = 0;
+	public int growPlusCost = 10;
+	public Button growPlusBut;
 	// Start is called before the first frame update
 	public void AddWater()
     {
@@ -64,6 +68,14 @@ public class Shop : MonoBehaviour
 		if (tempHighTic >= tempHighCost)
 		{
 			tempHighTic = 0;
+		}
+	}
+	
+	public void GrowPLus()
+	{
+		if (growPlusTic >= growPlusCost)
+		{
+			growPlusTic = 0;
 		}
 	}
 
