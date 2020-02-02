@@ -5,6 +5,8 @@ using System.Linq;
 
 public class TreeController : MonoBehaviour
 {
+    public dynamic DataProvider;
+
     [SerializeField]
     private Transform tree;
 
@@ -49,13 +51,22 @@ public class TreeController : MonoBehaviour
     {
         GRATE = GrowthRate();
 
+        CauseDeath cd;
+        if (water <= waterLowDead)
+            cd = 
         if (water <= waterLowDead || water >= waterHighDeath
-            || temp < tempLowDead || temp >= tempHighDead)
-            UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
+            || temp < tempLowDead || temp >= tempHighDead);
+        if (cd != CauseDeath.None)
+            Die(cd);
 
         Grow(growth * GrowthRate() * Time.deltaTime, waterBaseConsumption * Time.deltaTime);
         if(temp >= 0)
             water -= tempWaterUsagePerDeg * Time.deltaTime * temp;
+    }
+
+    void Die(CauseDeath cd)
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
     }
 
     [SerializeField]
