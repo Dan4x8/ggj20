@@ -31,11 +31,10 @@ public class Weather : MonoBehaviour
 		string url = "http://api.openweathermap.org/data/2.5/weather?lon=" + lon + "&lat=" + lat + "&appid=634a27863c00b54741b8171aff512e22";
 		UnityWebRequest www = UnityWebRequest.Get(url);
 		yield return www.SendWebRequest();
-		if (www.error == null)
+		if (string.IsNullOrEmpty(www.error))
 		{
 			var data = (www.downloadHandler.text);
 			var d2 = JsonConvert.DeserializeObject<Weatherdata>(data);
-			Debug.Log(d2.name + " - " + d2.sys.country);
 			Data = d2;
 			callback.Invoke(d2);
 		}
